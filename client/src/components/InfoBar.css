@@ -1,0 +1,31 @@
+/* InfoBar.css */
+/* Info Bar Styles */
+.info {
+    background-color: var(--component-bg-color, beige);
+    width: 80%;
+    padding: 1rem;
+    border: .125rem solid var(--outline-color, black);
+}
+
+.info--header {
+    font-size: 2rem;
+    color: var(--subheader-color, black);
+}
+
+.info--description {
+    padding: .5rem;
+}
+
+.info--encounter-rules {
+    color: var(--body-txt-color, black);
+    font-weight: 700;
+}
+
+.info--encounter-rules:hover {
+    color: var(--link-hover-txt-color, gray);
+}
+
+.info--key-term {
+    font-weight: 600;
+    font-style: italic;
+}

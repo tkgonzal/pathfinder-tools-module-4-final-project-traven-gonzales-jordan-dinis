@@ -1,0 +1,65 @@
+/* EncounterPage.css */
+/* EncounterPage Styles */
+.encounter-page {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: .25rem;
+}
+
+/* The parameters used to generate the current encounters */
+.encounter-page--current-display {
+    font-size: 2.5rem;
+    text-align: center;
+}
+
+.encounter-page--display {
+    background-color: var(--encounter-display-bg-color, maroon);
+    width: 80%;
+    height: 20rem;
+    border: .125rem solid var(--outline-color, black);
+    padding: .5rem .25rem;
+    display: flex;
+    flex-direction: column;
+    gap: .25rem;
+    overflow-y: auto;
+}
+
+.encounter-page--nav {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.encounter-page--nav button  {
+    border-radius: 0.3175rem;
+    border: 0.0625rem solid var(--outline-color, #000);
+}
+
+.encounter-page--nav button img {
+    height: 1rem;
+}
+
+.encounter-page--nav  span {
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+/* Media Queries */
+@media (max-width: 960px) {
+    /* Encounter Page Styles */
+    .encounter-page--current-display {
+        font-size: 1.75rem;
+        text-align: center;
+    }
+}
+
+@media (max-width: 410px) {
+    .encounter-page {
+        width: 100%;
+    }
+}
