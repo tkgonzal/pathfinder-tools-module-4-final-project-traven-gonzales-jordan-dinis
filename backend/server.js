@@ -26,7 +26,7 @@ const pool = mysql.createPool({
 
 
 // Constants
-const PORT = process.env.AUTH_PORT || 5000;
+const PORT = process.env.PORT || 5000;
 
 // Middleware Configuration
 app.use(async function(req, res, next) {
