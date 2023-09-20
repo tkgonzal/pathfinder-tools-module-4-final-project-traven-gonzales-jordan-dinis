@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router-dom"
 import Header from "./components/Header"
 import LandingPage from "./pages/LandingPage"
 import EncounterCalculatorApp from "./pages/EncounterCalculatorApp"
+import LoginPage from "./pages/LoginPage"
 
 import "./App.css"
 
@@ -19,6 +20,20 @@ function App() {
         <Route 
           path="/encounter-calculator" 
           element={<EncounterCalculatorApp />} 
+        />
+        <Route 
+          path="/login"
+          element={
+          <LoginPage
+            userReturning = {true}
+          />}
+        />
+        <Route 
+          path="/register"
+          element={
+          <LoginPage
+            userReturning = {false}
+          />}
         />
       </Routes>
     </div>

@@ -28,6 +28,9 @@ function Header() {
                     <li>
                         <Link to={`/encounter-calculator`}>Encounter Calculator</Link>
                     </li>
+                    <li>
+                        <Link to={`/login`}>Login</Link>
+                    </li>
                 </ul>
             </nav>
         </header>
