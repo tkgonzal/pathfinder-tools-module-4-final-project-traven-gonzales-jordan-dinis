@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const uuid = require("uuid");
 
 // Route Configuration
-const router = express.Router();
+const usersRouter = express.Router();
 require("dotenv").config();
 
 // Constants
@@ -43,7 +43,7 @@ const authenticateToken = (req, res, next) => {
 }
 
 // Routes
-router.post("/register", async (req, res) => {
+usersRouter.post("/register", async (req, res) => {
     try {
         const hashedPassword = await bcrypt.hash(
             req.body.password, SALT
@@ -60,14 +60,20 @@ router.post("/register", async (req, res) => {
              VALUES (:id, :username, :password)`,
              user
         );
+
+        const accessToken = generateAccessToken(user);
     
-        res.json({ status: 200, message: "User added to app"});
+        res.json({ 
+            status: 200,
+            accessToken,
+            message: "User added to app"
+        });
     } catch (error) {
         res.json({ status: 500, error: error, message: error.message });
     }
 });
 
-router.post("/login", async (req, res) => {
+usersRouter.post("/login", async (req, res) => {
     try {
         const { username, password } = req.body;
 
@@ -103,4 +109,4 @@ router.post("/login", async (req, res) => {
     }
 });
 
-module.exports = router;
+module.exports = { usersRouter, authenticateToken };

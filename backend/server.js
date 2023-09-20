@@ -1,10 +1,12 @@
 const express = require("express");
 const cors = require("cors");
-const mysql = require("mysql2/promise");
 
 const getDatabaseConnection = require("./config/sqlDbConfig.js");
 
-const usersRouter = require("./routes/users.js");
+const { 
+    usersRouter,
+    authenticateToken
+} = require("./routes/users.js");
 
 // Server Configuration
 require("dotenv").config();
@@ -27,7 +29,6 @@ app.use(getDatabaseConnection);
 
 // Route Configuration
 app.use("/users", usersRouter);
-
 
 // Run App
 app.listen(PORT, () => console.log(`Server start on port ${PORT}`));
