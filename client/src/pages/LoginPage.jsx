@@ -1,11 +1,21 @@
 // LoginPage.jsx
 import "./LoginPage.css"
 import { Link } from "react-router-dom"
+
+
 import useLoginInput from "../hooks/useLoginInput.jsx"
 
 function LoginPage(props){
+    const {
+        loginInput,
+        onInputChange,
+        userReturning,
+        setUserReturning,
+        onLoginSubmit
+    } = useLoginInput();
+
     return (
-        <form className = "login-form" onSubmit = {props}>
+        <form className = "login-form" onSubmit = {onLoginSubmit}>
             <div className = "login-form--top">
                 <h2 className = "login-form--header">
                     Login

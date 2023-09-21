@@ -1,12 +1,11 @@
 // useLoginInput.jsx
 import { useState } from "react"
-import "dotenv/config"
 
 //pulls username from database to make sure it matches/is unique
-const BASE_API_URL = process.env.SERVER_URL
+const BASE_API_URL = import.meta.env.VITE_SERVER_URL
 
 function useLoginInput() {
-    const [loginInput, setLoginInput] = useState(()=>({
+    const [loginInput, setLoginInput] = useState(() => ({
         username: "",
         password: ""
     }))
