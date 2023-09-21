@@ -1,6 +1,7 @@
 // LoginPage.jsx
 import "./LoginPage.css"
 import { Link } from "react-router-dom"
+import useLoginInput from "../hooks/useLoginInput.jsx"
 
 function LoginPage(props){
     return (
