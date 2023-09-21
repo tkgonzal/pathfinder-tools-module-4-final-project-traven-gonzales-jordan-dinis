@@ -22,17 +22,19 @@ function useLoginInput() {
 
     async function onLoginSubmit(event){
         event.preventDefault()
-
         try {
             const res = await fetch(
                 `${BASE_API_URL}/users/${userReturning ? "login" : "register"}`,
                 {
+                    headers: {
+                        'Content-Type': 'application/json'},
                     method : "POST",
                     mode : "cors",
                     body: JSON.stringify(loginInput)
                 }
             )
-            console.log(res);
+            const resData = await res.json()
+            console.log(resData)
         } catch (error) {
             console.log(error)
         }

@@ -4,6 +4,7 @@ import { Link } from "react-router-dom"
 
 
 import useLoginInput from "../hooks/useLoginInput.jsx"
+import { useEffect } from "react";
 
 function LoginPage(props){
     const {
@@ -14,6 +15,9 @@ function LoginPage(props){
         onLoginSubmit
     } = useLoginInput();
 
+    useEffect(()=>{
+        setUserReturning(props.userReturning)
+    },[props.userReturning])
     return (
         <form className = "login-form" onSubmit = {onLoginSubmit}>
             <div className = "login-form--top">
@@ -28,6 +32,8 @@ function LoginPage(props){
                         <input
                             name = "username"
                             type = "text"
+                            value = {loginInput.username}
+                            onChange = {onInputChange}
                             required
                         />
                     </span>
@@ -37,6 +43,8 @@ function LoginPage(props){
                         <input
                             name = "password"
                             type = "password"
+                            value = {loginInput.password}
+                            onChange = {onInputChange}
                             required
                         />
                     </span>
