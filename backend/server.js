@@ -7,6 +7,7 @@ const {
     usersRouter,
     authenticateToken
 } = require("./routes/users.js");
+const encountersRouter = require("./routes/encounters.js");
 
 // Server Configuration
 require("dotenv").config();
@@ -29,6 +30,7 @@ app.use(getDatabaseConnection);
 
 // Route Configuration
 app.use("/users", usersRouter);
+app.use("/encounters", authenticateToken, encountersRouter);
 
 // Run App
 app.listen(PORT, () => console.log(`Server start on port ${PORT}`));

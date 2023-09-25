@@ -5,12 +5,16 @@ CREATE TABLE Encounter (
     party_level TINYINT NOT NULL,
     party_size TINYINT NOT NULL,
     threat_level VARCHAR(8) NOT NULL,
+    xp_budget INT NOT NULL,
     FOREIGN KEY (user_id) REFERENCES User(id)
 );
 
 -- Debugging
 -- Delete tables
 DROP TABLE Encounter;
+
+-- Delete all entries from table
+TRUNCATE TABLE Encounter;
 
 -- View Table
 SELECT * FROM Encounter;

@@ -7,9 +7,6 @@ const uuid = require("uuid");
 const usersRouter = express.Router();
 require("dotenv").config();
 
-// Constants
-const SALT = 10;
-
 // Authorization Helper Functions
 const generateAccessToken = (user) => {
     return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);
@@ -46,7 +43,7 @@ const authenticateToken = (req, res, next) => {
 usersRouter.post("/register", async (req, res) => {
     try {
         const hashedPassword = await bcrypt.hash(
-            req.body.password, SALT
+            req.body.password, process.env.SALT
         );
             
         const user = { 
