@@ -7,4 +7,5 @@ node_modules
 .vscode
 .env
 client/.env
+backend/.env
 localinstance.session.sql
