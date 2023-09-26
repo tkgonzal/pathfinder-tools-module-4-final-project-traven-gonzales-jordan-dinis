@@ -9,7 +9,7 @@ require("dotenv").config();
 
 // Authorization Helper Functions
 const generateAccessToken = (user) => {
-    return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);
+    return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: "3h"});
 }
 
 // Middleware
