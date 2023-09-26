@@ -13,7 +13,3 @@ DROP TABLE Creature;
 
 -- View Table
 SELECT * FROM Creature;
-
-UPDATE Encounter
-SET name='test2'
-WHERE id='494177db-6905-4e51-a00c-8ae84e25b780'

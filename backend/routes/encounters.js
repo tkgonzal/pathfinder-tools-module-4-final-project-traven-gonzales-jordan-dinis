@@ -111,29 +111,6 @@ encountersRouter.get("/:encounterId", async (req, res) => {
     }
 });
 
-encountersRouter.put("/rename/:encounterId", async (req, res) => {
-    try {
-        const { encounterId } = req.params;
-        const { username, newEncounterName } = req.body;
-
-        await validateEncounterEndpointUsage(username, encounterId, req.db);
-
-        await req.db.query(
-            `UPDATE Encounter
-             SET name = :newEncounterName
-             WHERE id = :encounterId`,
-            { encounterId, newEncounterName }
-        );
-
-        res.json({ 
-            status: 200, 
-            message: `Encounter name changed to ${newEncounterName}`
-        });
-    } catch (error) {
-        res.json({ status: 500, error, message: error.message });
-    }
-});
-
 encountersRouter.post("/add", async (req, res) => {
     try {
         const { username, encounter } = req.body;
@@ -161,6 +138,52 @@ encountersRouter.post("/add", async (req, res) => {
         }));
 
         res.json({ status: 200, message: "Encounter added" });
+    } catch (error) {
+        res.json({ status: 500, error, message: error.message });
+    }
+});
+
+encountersRouter.put("/rename/:encounterId", async (req, res) => {
+    try {
+        const { encounterId } = req.params;
+        const { username, newEncounterName } = req.body;
+
+        await validateEncounterEndpointUsage(username, encounterId, req.db);
+
+        await req.db.query(
+            `UPDATE Encounter
+             SET name = :newEncounterName
+             WHERE id = :encounterId`,
+            { encounterId, newEncounterName }
+        );
+
+        res.json({ 
+            status: 200, 
+            message: `Encounter name changed to ${newEncounterName}`
+        });
+    } catch (error) {
+        res.json({ status: 500, error, message: error.message });
+    }
+});
+
+encountersRouter.delete("/:encounterId", async (req, res) => {
+    try {
+        const { encounterId } = req.params;
+        const { username } = req.body;
+
+        await validateEncounterEndpointUsage(username, encounterId, req.db);
+
+        await req.db.query(
+            "DELETE FROM Creature WHERE encounter_id = :encounterId",
+            { encounterId }
+        );
+
+        await req.db.query(
+            "DELETE FROM Encounter WHERE id = :encounterId",
+            { encounterId }
+        );
+
+        res.json({ status: 200, message: "Deleted encounter from app" });
     } catch (error) {
         res.json({ status: 500, error, message: error.message });
     }
