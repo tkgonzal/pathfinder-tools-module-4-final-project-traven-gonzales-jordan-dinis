@@ -11,22 +11,99 @@ const encountersRouter = express.Router();
  * @returns {string} The id of the user based on their username
  */
 const getUserId = async (username, db) => {
-    const query = await db.query(
+    const userIdQuery = await db.query(
         `SELECT id FROM User
          WHERE username=:username`,
         { username }
     );
     
-    if (!query[0].length) {
+    if (!userIdQuery[0].length) {
         throw new Error(`There is no user named ${username}`);
     }
 
-    const [[{ id }]] = query;
+    const [[{ id }]] = userIdQuery;
 
     return id;
 }
 
+const validateEncounterEndpointUsage = async (username, encounterId, db) => {
+    const userId = await getUserId(username, db);
+
+    const encounterQuery = await db.query(
+        `SELECT user_id FROM Encounter
+         WHERE id=:encounterId`,
+        { encounterId }
+    );
+
+    const [[{ user_id: encounterUserId }]] = encounterQuery;
+
+    if (encounterUserId !== userId) {
+        throw new Error("Cannot retrieve Encounter not owned by the current user");
+    }
+}
+
 // Routes
+encountersRouter.get("/", async (req, res) => {
+    try {
+        const { username } = req.body;
+        const userId = await getUserId(username, req.db);
+
+        const encountersQuery = await req.db.query(
+            `SELECT * FROM Encounter
+             WHERE user_id=:userId`,
+            { userId }
+        );
+
+        const [encounters] = encountersQuery;
+
+        res.json({ 
+            status: 200,
+            encounters,
+            message: "Encounters retrieved" 
+        });
+    } catch (error) {
+        res.json({ status: 500, error, message: error.message });
+    }
+});
+
+encountersRouter.get("/:encounterId", async (req, res) => {
+    try {
+        const { encounterId } = req.params;
+        const { username } = req.body;
+
+        await validateEncounterEndpointUsage(username, encounterId, req.db);
+
+        const creaturesQuery = await req.db.query(
+            `SELECT * FROM Creature
+             WHERE encounter_id=:encounterId`,
+            { encounterId }
+        );
+
+        const [creatures] = creaturesQuery;
+        
+        // Processes the retrieved creatures into an array of 
+        // 2 element arrays consisting of [creature, quantity]
+        // such that it is formatted properly for the client
+        const processedCreatures = creatures.map(
+            creature => [
+                {
+                    level: creature.level,
+                    xp: creature.xp
+                },
+                creature.quantity
+            ]
+        );
+
+        res.json({ 
+            status: 200, 
+            encounterCreatures: processedCreatures,
+            message: "Creatures for encounter retrieved" 
+        });
+    } catch (error) {
+        res.json({ status: 500, error, message: error.message });
+    }
+});
+
 encountersRouter.post("/add", async (req, res) => {
     try {
         const { username, encounter } = req.body;
@@ -53,9 +130,9 @@ encountersRouter.post("/add", async (req, res) => {
             );
         }));
 
-        res.json({status: 200, message: "Encounter added"});
+        res.json({ status: 200, message: "Encounter added" });
     } catch (error) {
-        res.json(error);
+        res.json({ status: 500, error, message: error.message });
     }
 });
 
