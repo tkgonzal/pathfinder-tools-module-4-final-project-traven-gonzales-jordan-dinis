@@ -11,10 +11,10 @@ CREATE TABLE Encounter (
 
 -- Debugging
 -- Delete tables
-DROP TABLE Encounter;
+-- DROP TABLE Encounter;
 
 -- Delete all entries from table
-TRUNCATE TABLE Encounter;
+-- TRUNCATE TABLE Encounter;
 
 -- View Table
-SELECT * FROM Encounter;
+-- SELECT * FROM Encounter;

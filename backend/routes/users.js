@@ -13,6 +13,14 @@ const generateAccessToken = (user) => {
 }
 
 // Middleware
+/**
+ * Authenticates a user's token.
+ * @param {Object} req The request object
+ * @param {Object} res The response object
+ * @param {Function} next The next middleware to call 
+ * @returns {Object} If there is an error in verifying the user's token, the response
+ * object is returned to indicate an invalid access token
+ */
 const authenticateToken = (req, res, next) => {
     const authHeader = req.headers["authorization"];
     const token = authHeader && authHeader.split(" ")[1];
@@ -40,6 +48,7 @@ const authenticateToken = (req, res, next) => {
 }
 
 // Routes
+// Registers user to the app
 usersRouter.post("/register", async (req, res) => {
     try {
         const hashedPassword = await bcrypt.hash(
@@ -70,6 +79,7 @@ usersRouter.post("/register", async (req, res) => {
     }
 });
 
+// Logs user back into the app
 usersRouter.post("/login", async (req, res) => {
     try {
         const { username, password } = req.body;

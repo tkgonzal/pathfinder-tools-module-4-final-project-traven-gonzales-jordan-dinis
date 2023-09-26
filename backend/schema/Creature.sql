@@ -9,7 +9,7 @@ CREATE TABLE Creature (
 
 -- Debugging
 -- Delete tables
-DROP TABLE Creature;
+-- DROP TABLE Creature;
 
 -- View Table
-SELECT * FROM Creature;
+-- SELECT * FROM Creature;

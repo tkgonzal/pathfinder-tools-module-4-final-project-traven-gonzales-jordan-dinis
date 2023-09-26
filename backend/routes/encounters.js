@@ -50,6 +50,9 @@ const validateEncounterEndpointUsage = async (username, encounterId, db) => {
 }
 
 // Routes
+// Retrieves all the encounters for a user sans the creatures in each encounter. 
+// Request must consist of a body with the user's username and an Authentication
+// header with the user's access token
 encountersRouter.get("/", async (req, res) => {
     try {
         const { username } = req.body;
@@ -73,6 +76,9 @@ encountersRouter.get("/", async (req, res) => {
     }
 });
 
+// Retrieves the creatures for an Encounter using the specified Encounter's 
+// encounter id. Request must consist of a body with the user's username and 
+// an Authentication header with the user's access token.
 encountersRouter.get("/:encounterId", async (req, res) => {
     try {
         const { encounterId } = req.params;
@@ -111,6 +117,9 @@ encountersRouter.get("/:encounterId", async (req, res) => {
     }
 });
 
+// Endpoint to add an Encounter to the user's stored encounters. The body
+// requires the user's username, and an Encounter object to add. Also requires
+// an Authentication header with the user's access token.
 encountersRouter.post("/add", async (req, res) => {
     try {
         const { username, encounter } = req.body;
@@ -143,6 +152,9 @@ encountersRouter.post("/add", async (req, res) => {
     }
 });
 
+// Endpoint to rename an existing encounter. Requires the encounter's encounter id
+// in the request parameters, the user's username and new name for the encounter in 
+// the request body, and an Authorization with the user's access token.
 encountersRouter.put("/rename/:encounterId", async (req, res) => {
     try {
         const { encounterId } = req.params;
@@ -166,6 +178,9 @@ encountersRouter.put("/rename/:encounterId", async (req, res) => {
     }
 });
 
+// Endpoint to delete an encounter from a user's saved encounters. Requires the
+// Encounter's encounter id in the request paramters, the user's username in the 
+// request body, and an Authorization header with the user's access token.
 encountersRouter.delete("/:encounterId", async (req, res) => {
     try {
         const { encounterId } = req.params;

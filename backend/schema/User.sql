@@ -6,7 +6,7 @@ CREATE TABLE User (
 
 -- Debugging
 -- Delete tables
-DROP TABLE User;
+-- DROP TABLE User;
 
 -- View Table
-SELECT * FROM User;
+-- SELECT * FROM User;

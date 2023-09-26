@@ -3,10 +3,7 @@ const cors = require("cors");
 
 const getDatabaseConnection = require("./config/sqlDbConfig.js");
 
-const { 
-    usersRouter,
-    authenticateToken
-} = require("./routes/users.js");
+const { usersRouter, authenticateToken } = require("./routes/users.js");
 const encountersRouter = require("./routes/encounters.js");
 
 // Server Configuration
