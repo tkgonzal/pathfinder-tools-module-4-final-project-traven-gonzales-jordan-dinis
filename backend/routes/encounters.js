@@ -26,19 +26,26 @@ const getUserId = async (username, db) => {
     return id;
 }
 
+/**
+ * Throws an error if a user tries to edit or view an encounter that's not
+ * theirs
+ * @param {string} username A name for a user of the app
+ * @param {string} encounterId An id for an encounter
+ * @param {Object} db A mysql connection to query from
+ */
 const validateEncounterEndpointUsage = async (username, encounterId, db) => {
     const userId = await getUserId(username, db);
 
     const encounterQuery = await db.query(
         `SELECT user_id FROM Encounter
-         WHERE id=:encounterId`,
+         WHERE id = :encounterId`,
         { encounterId }
     );
 
     const [[{ user_id: encounterUserId }]] = encounterQuery;
 
     if (encounterUserId !== userId) {
-        throw new Error("Cannot retrieve Encounter not owned by the current user");
+        throw new Error("Cannot edit or retrieve Encounter unless its owned by the current user");
     }
 }
 
@@ -50,7 +57,7 @@ encountersRouter.get("/", async (req, res) => {
 
         const encountersQuery = await req.db.query(
             `SELECT * FROM Encounter
-             WHERE user_id=:userId`,
+             WHERE user_id = :userId`,
             { userId }
         );
 
@@ -75,7 +82,7 @@ encountersRouter.get("/:encounterId", async (req, res) => {
 
         const creaturesQuery = await req.db.query(
             `SELECT * FROM Creature
-             WHERE encounter_id=:encounterId`,
+             WHERE encounter_id = :encounterId`,
             { encounterId }
         );
 
@@ -98,6 +105,29 @@ encountersRouter.get("/:encounterId", async (req, res) => {
             status: 200, 
             encounterCreatures: processedCreatures,
             message: "Creatures for encounter retrieved" 
+        });
+    } catch (error) {
+        res.json({ status: 500, error, message: error.message });
+    }
+});
+
+encountersRouter.put("/rename/:encounterId", async (req, res) => {
+    try {
+        const { encounterId } = req.params;
+        const { username, newEncounterName } = req.body;
+
+        await validateEncounterEndpointUsage(username, encounterId, req.db);
+
+        await req.db.query(
+            `UPDATE Encounter
+             SET name = :newEncounterName
+             WHERE id = :encounterId`,
+            { encounterId, newEncounterName }
+        );
+
+        res.json({ 
+            status: 200, 
+            message: `Encounter name changed to ${newEncounterName}`
         });
     } catch (error) {
         res.json({ status: 500, error, message: error.message });
