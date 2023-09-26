@@ -72,6 +72,7 @@ usersRouter.post("/register", async (req, res) => {
         res.json({ 
             status: 200,
             accessToken,
+            username, 
             message: "User added to app"
         });
     } catch (error) {
@@ -105,6 +106,7 @@ usersRouter.post("/login", async (req, res) => {
             res.json({ 
                 status: 200,
                 accessToken,
+                username, 
                 message: "User logged in"
             });
         } else {
