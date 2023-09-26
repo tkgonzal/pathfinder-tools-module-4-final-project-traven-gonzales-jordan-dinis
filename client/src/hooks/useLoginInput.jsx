@@ -4,6 +4,7 @@ import { useState } from "react"
 //pulls username from database to make sure it matches/is unique
 const BASE_API_URL = import.meta.env.VITE_SERVER_URL
 
+//Hook to manage the login/register page input
 function useLoginInput() {
     const [loginInput, setLoginInput] = useState(() => ({
         username: "",
@@ -11,6 +12,11 @@ function useLoginInput() {
     }))
     const [userReturning, setUserReturning] = useState(true)
 
+    
+    /**
+     * tracks the fields on the login/register page for submitting
+     * @param {object} event Input change event object
+     */
     function onInputChange(event) {
         const { name, value } = event.target
 
@@ -20,6 +26,11 @@ function useLoginInput() {
         }))
     }
 
+    /**
+     * accesses the database API on submit from login/register page,
+     * using the tracked login data
+     * @param {object} event Form submission object
+     */
     async function onLoginSubmit(event){
         event.preventDefault()
         try {

@@ -7,6 +7,8 @@ import useLoginInput from "../hooks/useLoginInput.jsx"
 import { useEffect } from "react";
 
 function LoginPage(props){
+
+    //hooks to handle login data, and update/authorize with the database
     const {
         loginInput,
         onInputChange,
@@ -15,9 +17,15 @@ function LoginPage(props){
         onLoginSubmit
     } = useLoginInput();
 
+
+    //changes pages based on if user is on the login or register URL
+    //both pages are mostly the same but have minor variations so this way
+    //of handling it is particularly efficient
     useEffect(()=>{
         setUserReturning(props.userReturning)
     },[props.userReturning])
+
+
     return (
         <form className = "login-form" onSubmit = {onLoginSubmit}>
             <div className = "login-form--top">
