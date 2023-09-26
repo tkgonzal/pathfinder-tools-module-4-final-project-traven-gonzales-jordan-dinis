@@ -129,7 +129,7 @@ encountersRouter.post("/add", async (req, res) => {
             { id: encounterId, userId, ...encounter }
         );
 
-        Promise.all(creatures.map(async ([creature, quantity]) => {
+        await Promise.all(creatures.map(async ([creature, quantity]) => {
             await req.db.query(
                 `INSERT INTO Creature (id, encounter_id, level, xp, quantity)
                  VALUES (:id, :encounterId, :level, :xp, :quantity)`,
