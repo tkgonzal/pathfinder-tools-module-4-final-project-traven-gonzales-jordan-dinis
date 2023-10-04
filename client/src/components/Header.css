@@ -53,12 +53,17 @@ nav {
     margin: .5rem 0rem;
 }
 
-.nav--links li {
+.nav--links li, .nav--logout {
     margin: none;
 }
 
-.nav--links li a {
+.nav--links li a, .nav--logout {
     color: var(--logo-txt-color, red) !important;
+}
+
+.nav--logout{
+    text-decoration: underline;
+    cursor: pointer;
 }
 
 @media (max-width: 510px) {

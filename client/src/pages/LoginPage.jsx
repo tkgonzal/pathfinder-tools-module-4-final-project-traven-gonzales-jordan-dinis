@@ -14,7 +14,8 @@ function LoginPage(props){
         onInputChange,
         userReturning,
         setUserReturning,
-        onLoginSubmit
+        onLoginSubmit,
+        loginErrorMessage
     } = useLoginInput();
 
 
@@ -30,7 +31,7 @@ function LoginPage(props){
         <form className = "login-form" onSubmit = {onLoginSubmit}>
             <div className = "login-form--top">
                 <h2 className = "login-form--header">
-                    Login
+                    {userReturning ? "Login":"Register"}
                 </h2>
             </div>
             <div className = "login-form--content">
@@ -56,6 +57,14 @@ function LoginPage(props){
                             required
                         />
                     </span>
+
+                    {
+                        loginErrorMessage && 
+                        <p className="login-form--error-message">
+                            {loginErrorMessage}
+                        </p>
+                    }
+
                 </div>
             </div>
 

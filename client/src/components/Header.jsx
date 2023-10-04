@@ -9,7 +9,7 @@ import "./Header.css"
  * provides the main brandin of the website and the navlinks
  * to view the different pages on the website
  */
-function Header() {
+function Header(props) {
     return (
         <header className="logo">
             <span className="logo--design">
@@ -29,7 +29,16 @@ function Header() {
                         <Link to={`/encounter-calculator`}>Encounter Calculator</Link>
                     </li>
                     <li>
-                        <Link to={`/login`}>Login</Link>
+                        {
+                            props.loggedIn ?
+                                <span 
+                                    className = "nav--logout"
+                                    onClick = {props.logout}
+                                >
+                                    Logout
+                                </span> :
+                                <Link to={`/login`}>Login</Link>
+                        }
                     </li>
                 </ul>
             </nav>

@@ -5,6 +5,8 @@ import LandingPage from "./pages/LandingPage"
 import EncounterCalculatorApp from "./pages/EncounterCalculatorApp"
 import LoginPage from "./pages/LoginPage"
 
+import useAccess from "./hooks/useAccess"
+
 import "./App.css"
 
 /**
@@ -12,9 +14,11 @@ import "./App.css"
  * contains the logic for the multi-page routing
  */
 function App() {
+  const {loggedIn, logout} = useAccess()
+
   return (
     <div className="main">
-      <Header />
+      <Header loggedIn = {loggedIn} logout = {logout}/>
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route 

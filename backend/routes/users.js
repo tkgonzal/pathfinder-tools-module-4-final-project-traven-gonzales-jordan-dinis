@@ -110,7 +110,7 @@ usersRouter.post("/login", async (req, res) => {
                 message: "User logged in"
             });
         } else {
-            res.json({ status: 200, message: "Invalid credentials"});
+            res.json({ status: 400, message: "Invalid credentials"});
         }
     } catch (error) {
         console.log(error);

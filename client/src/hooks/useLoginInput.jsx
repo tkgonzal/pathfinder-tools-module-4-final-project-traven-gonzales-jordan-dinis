@@ -1,18 +1,36 @@
 // useLoginInput.jsx
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import { useNavigate } from "react-router-dom"
 
 //pulls username from database to make sure it matches/is unique
 const BASE_API_URL = import.meta.env.VITE_SERVER_URL
 
 //Hook to manage the login/register page input
 function useLoginInput() {
+    const navigate = useNavigate()
     const [loginInput, setLoginInput] = useState(() => ({
         username: "",
         password: ""
     }))
     const [userReturning, setUserReturning] = useState(true)
+    const [loginErrorMessage, setLoginErrorMessage] = useState("")
 
-    
+
+    useEffect(()=>{
+        reset()
+    },[userReturning])
+
+    /**
+     * Clears the login input and error messages when swapping between the login 
+     * and register pages
+     */
+    function reset(){
+        setLoginInput({
+            username: "",
+            password: ""
+        })
+        setLoginErrorMessage("")
+    }
     /**
      * tracks the fields on the login/register page for submitting
      * @param {object} event Input change event object
@@ -25,6 +43,7 @@ function useLoginInput() {
             [name]: value
         }))
     }
+
 
     /**
      * accesses the database API on submit from login/register page,
@@ -45,7 +64,17 @@ function useLoginInput() {
                 }
             )
             const resData = await res.json()
-            console.log(resData)
+
+            if(resData.status == 200){
+                localStorage.setItem("accessToken",resData.accessToken)
+                localStorage.setItem("username",resData.username)
+                navigate("/")
+            }else if(resData.status == 400){
+                setLoginErrorMessage("Invalid username or password")
+            }else if(resData.status == 500){
+                setLoginErrorMessage("Username already taken")
+            }
+
         } catch (error) {
             console.log(error)
         }
@@ -56,7 +85,8 @@ function useLoginInput() {
         onInputChange,
         userReturning,
         setUserReturning,
-        onLoginSubmit
+        onLoginSubmit,
+        loginErrorMessage
     }
 }
 
