@@ -59,11 +59,16 @@ nav {
 
 .nav--links li a, .nav--logout {
     color: var(--logo-txt-color, red) !important;
+    text-decoration: none;
 }
 
-.nav--logout{
-    text-decoration: underline;
+.nav--logout {
     cursor: pointer;
+}
+
+.nav--links li a:hover, 
+.nav--logout:hover {
+    text-decoration: underline;
 }
 
 @media (max-width: 510px) {
