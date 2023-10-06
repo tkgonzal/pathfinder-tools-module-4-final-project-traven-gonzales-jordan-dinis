@@ -20,6 +20,10 @@
     --creature-txt-color: #fff7f0;
     --creature-link-color: #a5dee5;
     --creature-link-hover-color: #bce9f0;
+    --login-bg-color: #681515;
+    --login-color: #eff5f8;
+    --login-link-color: #f3ce95;
+    --login-error-message: #f3bf95;
 }
 
 html {
@@ -64,4 +68,21 @@ hr {
     gap: 1rem;
     padding-bottom: 1.1rem;
     margin-top: 1rem;
+}
+
+.submit-btn {
+    border: none;
+    border-radius: 0.3125rem;
+    font-family: "Bebas Neue", cursive;
+    font-size: 1.4rem;
+    padding: .25rem .5rem .125rem;
+    background-color: var(--submit-btn-bg-color, gold);
+    color: var(--submit-btn-color, red);
+    cursor: pointer;
+    border: 0.12rem solid var(--outline-color, black);
+}
+
+.submit-btn:hover {
+    background-color: var(--submit-btn-bg-hover-color, yellow);
+    color: var(--submit-btn-hover-color, pink);
 }

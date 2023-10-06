@@ -1,13 +1,18 @@
 // LoginPage.jsx
-import "./LoginPage.css"
 import { Link } from "react-router-dom"
-
 
 import useLoginInput from "../hooks/useLoginInput.jsx"
 import { useEffect } from "react";
 
-function LoginPage(props){
+import "./LoginPage.css"
 
+/**
+ * @param {Object} props An object consisting of 
+ * -userReturning {bool} A bool indicating if the page should be for a
+ *  login for returning users or register page for new users
+ * @returns {ReactComponentElement} The Login/Register Page for the App
+ */
+function LoginPage(props){
     //hooks to handle login data, and update/authorize with the database
     const {
         loginInput,
@@ -18,14 +23,12 @@ function LoginPage(props){
         loginErrorMessage
     } = useLoginInput();
 
-
     //changes pages based on if user is on the login or register URL
     //both pages are mostly the same but have minor variations so this way
     //of handling it is particularly efficient
     useEffect(()=>{
         setUserReturning(props.userReturning)
     },[props.userReturning])
-
 
     return (
         <form className = "login-form" onSubmit = {onLoginSubmit}>
@@ -35,7 +38,7 @@ function LoginPage(props){
                 </h2>
             </div>
             <div className = "login-form--content">
-                <div className="calc-form--inputs">
+                <div className="login-form--inputs">
                     <span>
                         <label htmlFor="username">Username: </label>
                         <input
@@ -71,19 +74,15 @@ function LoginPage(props){
             <Link to={`/${props.userReturning ? "register": "login"}`}>
                 {
                     props.userReturning ? 
-                    "Don't Have an account? Register here." : 
+                    "Don't have an account? Register here." : 
                     "Already have an account? Login here."
                 }
             </Link>
 
-            <button
-                type="submit"
-            >
+            <button className="submit-btn" type="submit">
                 {props.userReturning ?"Login":"Register"}
             </button>
         </form>
-        
-
     )
 }
 
